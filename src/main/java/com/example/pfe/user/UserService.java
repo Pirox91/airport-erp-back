@@ -57,8 +57,7 @@ public class UserService {
         final User user = userRepository.findById(id)
                 .orElseThrow(NotFoundException::new);
         // remove many-to-many relations at owning side
-        flightScheduleRepository.findAllByCrew(user)
-                .forEach(flightSchedule -> flightSchedule.getCrew().remove(user));
+
         userRepository.delete(user);
     }
 
