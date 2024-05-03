@@ -8,7 +8,6 @@ import jakarta.validation.Valid;
 import java.time.LocalDateTime;
 import java.util.List;
 
-import org.springframework.data.jpa.repository.query.AbstractJpaQuery;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -70,11 +69,11 @@ public class AirplaneResource {
         return ResponseEntity.noContent().build();
     }
     @GetMapping("/available/{time}")
-    public ResponseEntity<List<AbstractJpaQuery>> getAvailableAirplanesWithNextDepartures(
+    public ResponseEntity<List<Object[]>> getAvailableAirplanesWithNextDepartures(
             @PathVariable LocalDateTime time) {
         System.out.println("nahna lahne");
 
-        List<AbstractJpaQuery> availableAirplanes = airplaneService.getAvailableAirplanesWithNextDeparture(time);
+        List<Object[]> availableAirplanes = airplaneService.getAvailableAirplanesWithNextDeparture(time);
         System.out.println(availableAirplanes);
 
         return ResponseEntity.ok(availableAirplanes);

@@ -10,7 +10,6 @@ import com.example.pfe.util.ReferencedWarning;
 import java.time.LocalDateTime;
 import java.util.List;
 import org.springframework.data.domain.Sort;
-import org.springframework.data.jpa.repository.query.AbstractJpaQuery;
 import org.springframework.stereotype.Service;
 
 
@@ -90,8 +89,9 @@ public class AirplaneService {
         }
         return null;
     }
-    public List<AbstractJpaQuery> getAvailableAirplanesWithNextDeparture(LocalDateTime time) {
-        return null;
+    public List<Object[]> getAvailableAirplanesWithNextDeparture(LocalDateTime time) {
+        System.out.println();
+        return airplaneRepository.findAvailableAirplanesWithNextDeparture(time);
     }
 
 }
