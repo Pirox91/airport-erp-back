@@ -1,5 +1,7 @@
 package com.example.pfe.user;
 
+import com.example.pfe.assigned.Assigned;
+import com.example.pfe.assigned.AssignedRepository;
 import com.example.pfe.flight_schedule.FlightScheduleRepository;
 import com.example.pfe.request.Request;
 import com.example.pfe.request.RequestRepository;
@@ -16,15 +18,15 @@ import org.springframework.stereotype.Service;
 public class UserService {
 
     private final UserRepository userRepository;
-    private final FlightScheduleRepository flightScheduleRepository;
     private final RequestRepository requestRepository;
+    private final AssignedRepository assignedRepository;
 
     public UserService(final UserRepository userRepository,
-            final FlightScheduleRepository flightScheduleRepository,
-            final RequestRepository requestRepository) {
+                       final RequestRepository requestRepository,
+                       final AssignedRepository assignedRepository) {
         this.userRepository = userRepository;
-        this.flightScheduleRepository = flightScheduleRepository;
         this.requestRepository = requestRepository;
+        this.assignedRepository = assignedRepository;
     }
 
     public List<UserDTO> findAll() {
@@ -95,6 +97,36 @@ public class UserService {
         if (userRequest != null) {
             referencedWarning.setKey("user.request.user.referenced");
             referencedWarning.addParam(userRequest.getId());
+            return referencedWarning;
+        }
+        final Assigned pilotAssigned = assignedRepository.findFirstByPilot(user);
+        if (pilotAssigned != null) {
+            referencedWarning.setKey("user.assigned.pilot.referenced");
+            referencedWarning.addParam(pilotAssigned.getId());
+            return referencedWarning;
+        }
+        final Assigned copilotAssigned = assignedRepository.findFirstByCopilot(user);
+        if (copilotAssigned != null) {
+            referencedWarning.setKey("user.assigned.copilot.referenced");
+            referencedWarning.addParam(copilotAssigned.getId());
+            return referencedWarning;
+        }
+        final Assigned pncAssigned = assignedRepository.findFirstByPnc(user);
+        if (pncAssigned != null) {
+            referencedWarning.setKey("user.assigned.pnc.referenced");
+            referencedWarning.addParam(pncAssigned.getId());
+            return referencedWarning;
+        }
+        final Assigned pnc2Assigned = assignedRepository.findFirstByPnc2(user);
+        if (pnc2Assigned != null) {
+            referencedWarning.setKey("user.assigned.pnc2.referenced");
+            referencedWarning.addParam(pnc2Assigned.getId());
+            return referencedWarning;
+        }
+        final Assigned pnc3Assigned = assignedRepository.findFirstByPnc3(user);
+        if (pnc3Assigned != null) {
+            referencedWarning.setKey("user.assigned.pnc3.referenced");
+            referencedWarning.addParam(pnc3Assigned.getId());
             return referencedWarning;
         }
         return null;

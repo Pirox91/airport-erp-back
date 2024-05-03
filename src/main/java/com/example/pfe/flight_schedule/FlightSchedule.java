@@ -13,6 +13,8 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.SequenceGenerator;
+
+import java.time.LocalDateTime;
 import java.time.OffsetDateTime;
 import java.util.Set;
 import lombok.Getter;
@@ -39,10 +41,10 @@ public class FlightSchedule {
     private Integer idfs;
 
     @Column(nullable = false)
-    private OffsetDateTime arrival;
+    private LocalDateTime arrival;
 
     @Column(nullable = false)
-    private OffsetDateTime departure;
+    private LocalDateTime departure;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "airplane_id", nullable = false)

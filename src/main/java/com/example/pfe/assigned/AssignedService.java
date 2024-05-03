@@ -37,6 +37,9 @@ public class AssignedService {
                 .map(assigned -> mapToDTO(assigned, new AssignedDTO()))
                 .orElseThrow(NotFoundException::new);
     }
+    public List<Assigned> getAssignmentsByUserId(Integer userId) {
+        return assignedRepository.findByCrewMemberId(userId);
+    }
 
     public Integer create(final AssignedDTO assignedDTO) {
         final Assigned assigned = new Assigned();

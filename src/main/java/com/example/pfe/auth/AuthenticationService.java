@@ -22,6 +22,7 @@ import org.springframework.security.web.authentication.WebAuthenticationDetailsS
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
+import java.util.Optional;
 
 
 @Service
@@ -53,7 +54,6 @@ public class AuthenticationService {
     }
 
     public AuthenticationResponse authenticate(AuthenticationRequest request) {
-
         authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(
                         request.getEmail(),
@@ -63,13 +63,15 @@ public class AuthenticationService {
 
         var user = repository.findByEmail(request.getEmail())
                 .orElseThrow();
-        System.out.print(repository.findByEmail("ssss"));
+        User user1=(User) user;
         var jwtToken = jwtService.generateToken(user);
         var refreshToken = jwtService.generateRefreshToken(user);
         revokeAllUserTokens((User) user);
         saveUserToken((User) user, jwtToken);
         return AuthenticationResponse.builder()
                 .accessToken(jwtToken)
+                .role(user1.getRole())
+                .id(user1.getId())
                 .refreshToken(refreshToken)
                 .build();
     }

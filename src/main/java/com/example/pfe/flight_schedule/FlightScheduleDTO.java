@@ -1,6 +1,8 @@
 package com.example.pfe.flight_schedule;
 
 import jakarta.validation.constraints.NotNull;
+
+import java.time.LocalDateTime;
 import java.time.OffsetDateTime;
 import lombok.Getter;
 import lombok.Setter;
@@ -13,10 +15,10 @@ public class FlightScheduleDTO {
     private Integer idfs;
 
     @NotNull
-    private OffsetDateTime arrival;
+    private LocalDateTime arrival;
 
     @NotNull
-    private OffsetDateTime departure;
+    private LocalDateTime departure;
 
     @NotNull
     private Integer airplane;

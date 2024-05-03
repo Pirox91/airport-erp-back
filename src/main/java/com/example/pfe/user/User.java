@@ -71,8 +71,7 @@ public class User implements UserDetails {
     @OneToMany(mappedBy = "user")
     private Set<Request> request;
 
-    @ManyToMany(mappedBy = "crew")
-    private Set<FlightSchedule> flights;
+
     @Override
     public String getUsername() {
         return email;

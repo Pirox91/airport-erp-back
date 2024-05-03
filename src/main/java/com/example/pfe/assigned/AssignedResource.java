@@ -35,6 +35,11 @@ public class AssignedResource {
     public ResponseEntity<AssignedDTO> getAssigned(@PathVariable(name = "id") final Integer id) {
         return ResponseEntity.ok(assignedService.get(id));
     }
+    @GetMapping("/user/{userId}")
+    public ResponseEntity<List<Assigned>> getAssignmentsByUser(@PathVariable Integer userId) {
+        List<Assigned> assignments = assignedService.getAssignmentsByUserId(userId);
+        return ResponseEntity.ok(assignments);
+    }
 
     @PostMapping
     @ApiResponse(responseCode = "201")
