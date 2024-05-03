@@ -58,7 +58,7 @@ public class User implements UserDetails {
     @Column(nullable = false)
     private String name;
 
-    @OneToMany(mappedBy = "user")
+    @OneToMany(fetch = FetchType.EAGER,mappedBy = "user")
     private List<Token> tokens;
 
     @Column(nullable = false)
@@ -68,7 +68,7 @@ public class User implements UserDetails {
     @Enumerated(EnumType.STRING)
     private Type type;
 
-    @OneToMany(mappedBy = "user")
+    @OneToMany(fetch = FetchType.EAGER,mappedBy = "user")
     private Set<Request> request;
 
 

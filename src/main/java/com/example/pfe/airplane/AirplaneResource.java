@@ -4,7 +4,12 @@ import com.example.pfe.util.ReferencedException;
 import com.example.pfe.util.ReferencedWarning;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import jakarta.validation.Valid;
+
+import java.time.LocalDateTime;
 import java.util.List;
+
+import org.springframework.data.jpa.repository.query.AbstractJpaQuery;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -64,5 +69,14 @@ public class AirplaneResource {
         airplaneService.delete(idap);
         return ResponseEntity.noContent().build();
     }
+    @GetMapping("/available/{time}")
+    public ResponseEntity<List<AbstractJpaQuery>> getAvailableAirplanesWithNextDepartures(
+            @PathVariable LocalDateTime time) {
+        System.out.println("nahna lahne");
 
+        List<AbstractJpaQuery> availableAirplanes = airplaneService.getAvailableAirplanesWithNextDeparture(time);
+        System.out.println(availableAirplanes);
+
+        return ResponseEntity.ok(availableAirplanes);
+    }
 }

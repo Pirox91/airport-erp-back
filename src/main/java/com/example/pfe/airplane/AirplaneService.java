@@ -6,8 +6,11 @@ import com.example.pfe.serie.Serie;
 import com.example.pfe.serie.SerieRepository;
 import com.example.pfe.util.NotFoundException;
 import com.example.pfe.util.ReferencedWarning;
+
+import java.time.LocalDateTime;
 import java.util.List;
 import org.springframework.data.domain.Sort;
+import org.springframework.data.jpa.repository.query.AbstractJpaQuery;
 import org.springframework.stereotype.Service;
 
 
@@ -85,6 +88,9 @@ public class AirplaneService {
             referencedWarning.addParam(airplaneSerie.getIds());
             return referencedWarning;
         }
+        return null;
+    }
+    public List<AbstractJpaQuery> getAvailableAirplanesWithNextDeparture(LocalDateTime time) {
         return null;
     }
 
