@@ -1,5 +1,6 @@
 package com.example.pfe.assigned;
 
+import ch.qos.logback.classic.model.LoggerModel;
 import com.example.pfe.flight_schedule.FlightSchedule;
 import com.example.pfe.user.User;
 import jakarta.persistence.Column;

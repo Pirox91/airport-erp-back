@@ -25,6 +25,5 @@ public interface AssignedRepository extends JpaRepository<Assigned, Integer> {
 
     boolean existsByFlightIdfs(Integer idfs);
     @Query("SELECT a FROM Assigned a WHERE a.pilot.id = :userId OR a.copilot.id = :userId OR a.pnc.id = :userId OR a.pnc2.id = :userId OR a.pnc3.id = :userId")
-    List<Assigned> findByCrewMemberId(@Param("userId") Integer userId);
-
+    List<Assigned> findByUserId(@Param("userId") Long userId);
 }

@@ -1,13 +1,16 @@
 package com.example.pfe.assigned;
 
 import com.example.pfe.flight_schedule.FlightSchedule;
+import com.example.pfe.flight_schedule.FlightScheduleDTO;
 import com.example.pfe.flight_schedule.FlightScheduleRepository;
 import com.example.pfe.user.User;
 import com.example.pfe.user.UserRepository;
 import com.example.pfe.util.NotFoundException;
 import java.util.List;
+import com.example.pfe.flight_schedule.FlightScheduleService;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
+import java.util.stream.Collectors;
 
 
 @Service
@@ -16,7 +19,7 @@ public class AssignedService {
     private final AssignedRepository assignedRepository;
     private final FlightScheduleRepository flightScheduleRepository;
     private final UserRepository userRepository;
-
+    private FlightScheduleService fss;
     public AssignedService(final AssignedRepository assignedRepository,
             final FlightScheduleRepository flightScheduleRepository,
             final UserRepository userRepository) {
@@ -36,9 +39,6 @@ public class AssignedService {
         return assignedRepository.findById(id)
                 .map(assigned -> mapToDTO(assigned, new AssignedDTO()))
                 .orElseThrow(NotFoundException::new);
-    }
-    public List<Assigned> getAssignmentsByUserId(Integer userId) {
-        return assignedRepository.findByCrewMemberId(userId);
     }
 
     public Integer create(final AssignedDTO assignedDTO) {
@@ -94,5 +94,52 @@ public class AssignedService {
     public boolean flightExists(final Integer idfs) {
         return assignedRepository.existsByFlightIdfs(idfs);
     }
+    public YetAnotherAssignedDTO convertToyetAnotherAssignedDTO(Assigned assigned) {
+        UserDTO pilotDTO = new UserDTO(assigned.getPilot().getId(),assigned.getPilot().getName(), assigned.getPilot().getSurname(), "pilot");
+        UserDTO coPilotDTO = new UserDTO(assigned.getCopilot().getId(),assigned.getCopilot().getName(), assigned.getCopilot().getSurname(), "copilot");
+        UserDTO pncDTO = new UserDTO(assigned.getPnc().getId(),assigned.getPnc().getName(), assigned.getPnc().getSurname(), "pnc");
+        UserDTO pnc2DTO = new UserDTO(assigned.getPnc2().getId(),assigned.getPnc2().getName(), assigned.getPnc2().getSurname(), "pnc");
+        UserDTO pnc3DTO = new UserDTO(assigned.getPnc3().getId(),assigned.getPnc3().getName(), assigned.getPnc3().getSurname(), "pnc");
 
+        YetAnotherAssignedDTO assignedDTO = new YetAnotherAssignedDTO();
+        assignedDTO.setPilot(pilotDTO);
+        assignedDTO.setCoPilot(coPilotDTO);
+        assignedDTO.setPnc(pncDTO);
+        assignedDTO.setPnc2(pnc2DTO);
+        assignedDTO.setPnc3(pnc3DTO);
+
+        return assignedDTO;
+    }
+    public List<YetAnotherAssignedDTO> getAssignmentsByUser(Long userId) {
+        List<Assigned> assignments = assignedRepository.findByUserId(userId);
+        return assignments.stream()
+                .map(this::convertToDTO)
+                .collect(Collectors.toList());
+    }
+
+    private YetAnotherAssignedDTO convertToDTO(Assigned assigned) {
+        FlightScheduleDTO fdt= new FlightScheduleDTO();
+        YetAnotherAssignedDTO dto = new YetAnotherAssignedDTO();
+        dto.setId(Math.toIntExact(assigned.getId()));
+        dto.setFlight(fss.mapToDTO(assigned.getFlight(),fdt));
+        dto.setPilot(convertUserToDTO(assigned.getPilot()));
+        dto.setCoPilot(convertUserToDTO(assigned.getCopilot()));
+        dto.setPnc(convertUserToDTO(assigned.getPnc()));
+        dto.setPnc2(convertUserToDTO(assigned.getPnc2()));
+        dto.setPnc3(convertUserToDTO(assigned.getPnc3()));
+        return dto;
+    }
+
+    private UserDTO convertUserToDTO(User user) {
+        if (user == null) {
+            return null;
+        }
+        UserDTO userDTO = new UserDTO();
+        userDTO.setId(Math.toIntExact(user.getId()));
+        userDTO.setName(user.getName());
+        userDTO.setSurname(user.getSurname());
+        userDTO.setType(user.getType().toString());
+        return userDTO;
+    }
 }
+

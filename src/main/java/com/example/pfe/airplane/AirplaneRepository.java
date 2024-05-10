@@ -10,10 +10,24 @@ import java.util.List;
 
 public interface AirplaneRepository extends JpaRepository<Airplane, Integer> {
 
-    @Query(value = "SELECT a.idap as airplaneId, a.model as airplaneModel, MIN(fs.departure) as nextDepartureTime " +
-            "FROM airplane a " +
-            "LEFT JOIN flight_schedule fs ON a.idap = fs.airplane_id " +
-            "WHERE :time NOT BETWEEN fs.departure AND fs.arrival " +
-            "AND fs.departure > :time " +
-            "GROUP BY a.idap, a.model", nativeQuery = true)
+    @Query(value =
+            """
+     WITH AvailableAirplanes AS (
+     SELECT a.idap AS airplane_id, a.model AS airplane_model
+     FROM airplane a
+     LEFT JOIN flight_schedule fs ON a.idap = fs.airplane_id
+         AND :time BETWEEN fs.departure AND fs.arrival
+     WHERE fs.airplane_id IS NULL
+ ),
+ NextDepartures AS (
+     SELECT fs.airplane_id, MIN(fs.departure) AS next_departure_time
+     FROM flight_schedule fs
+     WHERE fs.departure > :time
+     GROUP BY fs.airplane_id
+ )
+ SELECT aa.airplane_id, aa.airplane_model, nd.next_departure_time
+ FROM AvailableAirplanes aa
+ LEFT JOIN NextDepartures nd ON aa.airplane_id = nd.airplane_id;
+ """
+            , nativeQuery = true)
     List<Object[]> findAvailableAirplanesWithNextDeparture(@Param("time") LocalDateTime time);}

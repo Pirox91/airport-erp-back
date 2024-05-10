@@ -64,7 +64,7 @@ public class FlightScheduleService {
         flightScheduleRepository.deleteById(idfs);
     }
 
-    private FlightScheduleDTO mapToDTO(final FlightSchedule flightSchedule,
+    public FlightScheduleDTO mapToDTO(final FlightSchedule flightSchedule,
             final FlightScheduleDTO flightScheduleDTO) {
         flightScheduleDTO.setIdfs(flightSchedule.getIdfs());
         flightScheduleDTO.setArrival(flightSchedule.getArrival());
