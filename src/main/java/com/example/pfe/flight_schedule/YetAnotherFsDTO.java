@@ -1,8 +1,6 @@
 package com.example.pfe.flight_schedule;
 
-import com.example.pfe.airplane.Airplane;
 import com.example.pfe.airplane.AirplaneDTO;
-import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.Setter;
 

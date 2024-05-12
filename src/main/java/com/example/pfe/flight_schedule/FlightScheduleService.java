@@ -32,7 +32,6 @@ public class FlightScheduleService {
     private final PathRepository pathRepository;
     private final AssignedRepository assignedRepository;
     private final PathResource pathResource;
-    private AirplaneService airplaneService;
 
     public FlightScheduleService(final FlightScheduleRepository flightScheduleRepository,
                                  final AirplaneRepository airplaneRepository, final WeeklyRepository weeklyRepository,
