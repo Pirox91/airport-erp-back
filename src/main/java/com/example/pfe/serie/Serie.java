@@ -41,15 +41,15 @@ public class Serie {
     @Column(nullable = false)
     private LocalTime durration;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "departure_id", nullable = false)
     private Airport departure;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "destination_id", nullable = false)
     private Airport destination;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "airplane_id", nullable = false)
     private Airplane airplane;
 

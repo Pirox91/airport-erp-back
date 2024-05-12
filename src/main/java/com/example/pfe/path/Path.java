@@ -45,7 +45,7 @@ public class Path {
     @JoinColumn(name = "flight_id", nullable = false)
     private FlightSchedule flight;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "serie_id", nullable = false)
     private Serie serie;
 

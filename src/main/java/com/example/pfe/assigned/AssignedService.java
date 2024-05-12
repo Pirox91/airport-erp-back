@@ -1,13 +1,11 @@
 package com.example.pfe.assigned;
 
-import com.example.pfe.flight_schedule.FlightSchedule;
-import com.example.pfe.flight_schedule.FlightScheduleDTO;
-import com.example.pfe.flight_schedule.FlightScheduleRepository;
+import com.example.pfe.flight_schedule.*;
 import com.example.pfe.user.User;
 import com.example.pfe.user.UserRepository;
 import com.example.pfe.util.NotFoundException;
 import java.util.List;
-import com.example.pfe.flight_schedule.FlightScheduleService;
+
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import java.util.stream.Collectors;
@@ -105,6 +103,7 @@ public class AssignedService {
         assignedDTO.setPilot(pilotDTO);
         assignedDTO.setCoPilot(coPilotDTO);
         assignedDTO.setPnc(pncDTO);
+        assignedDTO.setPnc(pncDTO);
         assignedDTO.setPnc2(pnc2DTO);
         assignedDTO.setPnc3(pnc3DTO);
 
@@ -118,10 +117,15 @@ public class AssignedService {
     }
 
     private YetAnotherAssignedDTO convertToDTO(Assigned assigned) {
-        FlightScheduleDTO fdt= new FlightScheduleDTO();
+        YetAnotherFsDTO fdt= new YetAnotherFsDTO();
         YetAnotherAssignedDTO dto = new YetAnotherAssignedDTO();
+        System.out.println("assigned.getFlight().getIdfs()");
+        System.out.println(assigned.getFlight().getIdfs());
+        System.out.println("assigned.getFlight().getIdfs()");
+
+        fdt.setterForAll(assigned.getFlight());
         dto.setId(Math.toIntExact(assigned.getId()));
-        dto.setFlight(fss.mapToDTO(assigned.getFlight(),fdt));
+        dto.setFlight(fdt);
         dto.setPilot(convertUserToDTO(assigned.getPilot()));
         dto.setCoPilot(convertUserToDTO(assigned.getCopilot()));
         dto.setPnc(convertUserToDTO(assigned.getPnc()));

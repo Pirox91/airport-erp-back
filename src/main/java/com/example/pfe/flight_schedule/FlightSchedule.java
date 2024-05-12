@@ -46,14 +46,14 @@ public class FlightSchedule {
     @Column(nullable = false)
     private LocalDateTime departure;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "airplane_id", nullable = false)
     private Airplane airplane;
 
-    @OneToMany(mappedBy = "flight")
+    @OneToMany(fetch = FetchType.EAGER,mappedBy = "flight")
     private Set<Path> path;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "weekly_id")
     private Weekly weekly;
 
