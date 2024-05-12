@@ -1,16 +1,24 @@
 package com.example.pfe.flight_schedule;
 
 import com.example.pfe.airplane.Airplane;
+import com.example.pfe.airplane.AirplaneDTO;
 import com.example.pfe.airplane.AirplaneRepository;
+import com.example.pfe.airplane.AirplaneService;
+import com.example.pfe.airport.AirportDTO;
 import com.example.pfe.assigned.Assigned;
 import com.example.pfe.assigned.AssignedRepository;
 import com.example.pfe.path.Path;
 import com.example.pfe.path.PathRepository;
+import com.example.pfe.path.PathResource;
 import com.example.pfe.util.NotFoundException;
 import com.example.pfe.util.ReferencedWarning;
 import com.example.pfe.weekly.Weekly;
 import com.example.pfe.weekly.WeeklyRepository;
+
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
+
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
@@ -23,27 +31,30 @@ public class FlightScheduleService {
     private final WeeklyRepository weeklyRepository;
     private final PathRepository pathRepository;
     private final AssignedRepository assignedRepository;
+    private final PathResource pathResource;
+    private AirplaneService airplaneService;
 
     public FlightScheduleService(final FlightScheduleRepository flightScheduleRepository,
-            final AirplaneRepository airplaneRepository, final WeeklyRepository weeklyRepository,
-            final PathRepository pathRepository, final AssignedRepository assignedRepository) {
+                                 final AirplaneRepository airplaneRepository, final WeeklyRepository weeklyRepository,
+                                 final PathRepository pathRepository, final AssignedRepository assignedRepository, PathResource pathResource) {
         this.flightScheduleRepository = flightScheduleRepository;
         this.airplaneRepository = airplaneRepository;
         this.weeklyRepository = weeklyRepository;
         this.pathRepository = pathRepository;
         this.assignedRepository = assignedRepository;
+        this.pathResource = pathResource;
     }
 
-    public List<FlightScheduleDTO> findAll() {
+    public List<YetAnotherFsDTO> findAll() {
         final List<FlightSchedule> flightSchedules = flightScheduleRepository.findAll(Sort.by("idfs"));
         return flightSchedules.stream()
-                .map(flightSchedule -> mapToDTO(flightSchedule, new FlightScheduleDTO()))
+                .map(flightSchedule -> mapToAnotherDTO(flightSchedule, new YetAnotherFsDTO()))
                 .toList();
     }
 
-    public FlightScheduleDTO get(final Integer idfs) {
+    public YetAnotherFsDTO get(final Integer idfs) {
         return flightScheduleRepository.findById(idfs)
-                .map(flightSchedule -> mapToDTO(flightSchedule, new FlightScheduleDTO()))
+                .map(flightSchedule -> mapToAnotherDTO(flightSchedule, new YetAnotherFsDTO()))
                 .orElseThrow(NotFoundException::new);
     }
 
@@ -73,6 +84,34 @@ public class FlightScheduleService {
         flightScheduleDTO.setWeekly(flightSchedule.getWeekly() == null ? null : flightSchedule.getWeekly().getId());
         return flightScheduleDTO;
     }
+    public YetAnotherFsDTO mapToAnotherDTO(final FlightSchedule flightSchedule,
+                           final YetAnotherFsDTO flightScheduleDTO){
+        flightScheduleDTO.setIdfs(flightSchedule.getIdfs());
+        flightScheduleDTO.setArrival(flightSchedule.getArrival());
+        flightScheduleDTO.setDeparture(flightSchedule.getDeparture());
+        flightScheduleDTO.setAirplane(flightSchedule.getAirplane() == null ? null :new AirplaneDTO(
+                flightSchedule.getAirplane().getIdap(),
+                flightSchedule.getAirplane().getAvailable(),
+                flightSchedule.getAirplane().getModel())
+        );
+        Set<YetAnotherPathDTO> yetAnotherPathDTO= new HashSet<>();
+        YetAnotherSerieDTO yetAnotherSerieDTO= new YetAnotherSerieDTO();
+        for (Path path : flightSchedule.getPath()) {
+            yetAnotherSerieDTO.setDurration(path.getSerie().getDurration());
+            yetAnotherSerieDTO.setDestination(new AirportDTO(path.getSerie().getDestination().getIdarpt(),path.getSerie().getDestination().getName()));
+            yetAnotherSerieDTO.setDeparture(new AirportDTO(path.getSerie().getDeparture().getIdarpt(),path.getSerie().getDeparture().getName()));
+
+            YetAnotherPathDTO dto = new YetAnotherPathDTO(
+                    path.getId(),path.getDeparture(),
+                    path.getStopover(),
+                    yetAnotherSerieDTO);
+            yetAnotherPathDTO.add(dto);
+
+        }
+        flightScheduleDTO.setPath(yetAnotherPathDTO);
+        return flightScheduleDTO;
+    }
+
 
     private FlightSchedule mapToEntity(final FlightScheduleDTO flightScheduleDTO,
             final FlightSchedule flightSchedule) {

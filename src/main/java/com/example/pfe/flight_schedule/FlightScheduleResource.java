@@ -29,12 +29,12 @@ public class FlightScheduleResource {
     }
 
     @GetMapping
-    public ResponseEntity<List<FlightScheduleDTO>> getAllFlightSchedules() {
+    public ResponseEntity<List<YetAnotherFsDTO>> getAllFlightSchedules() {
         return ResponseEntity.ok(flightScheduleService.findAll());
     }
 
     @GetMapping("/{idfs}")
-    public ResponseEntity<FlightScheduleDTO> getFlightSchedule(
+    public ResponseEntity<YetAnotherFsDTO> getFlightSchedule(
             @PathVariable(name = "idfs") final Integer idfs) {
         return ResponseEntity.ok(flightScheduleService.get(idfs));
     }

@@ -37,6 +37,10 @@ public class SerieResource {
     public ResponseEntity<SerieDTO> getSerie(@PathVariable(name = "ids") final Integer ids) {
         return ResponseEntity.ok(serieService.get(ids));
     }
+    @GetMapping("airplane/{ids}")
+    public ResponseEntity<List<SerieDTO>>  getSeriebyairplane(@PathVariable(name = "ids") final Integer ids) {
+        return  ResponseEntity.ok(serieService.getbyAirplane(ids));
+    }
 
     @PostMapping
     @ApiResponse(responseCode = "201")

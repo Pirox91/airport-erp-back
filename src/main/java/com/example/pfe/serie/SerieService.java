@@ -42,6 +42,12 @@ public class SerieService {
                 .map(serie -> mapToDTO(serie, new SerieDTO()))
                 .orElseThrow(NotFoundException::new);
     }
+    public List<SerieDTO> getbyAirplane(final Integer ids) {
+        final List<Serie> series = serieRepository.findByAirplaneIdap(ids);
+        return series.stream()
+                .map(serie -> mapToDTO(serie, new SerieDTO()))
+                .toList();
+    }
 
     public Integer create(final SerieDTO serieDTO) {
         final Serie serie = new Serie();
