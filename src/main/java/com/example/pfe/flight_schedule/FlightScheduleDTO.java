@@ -22,6 +22,7 @@ public class FlightScheduleDTO {
 
     @NotNull
     private Integer airplane;
+    private Boolean delay;
 
     private Integer weekly;
 

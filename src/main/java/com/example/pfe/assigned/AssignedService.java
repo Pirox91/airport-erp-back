@@ -38,6 +38,12 @@ public class AssignedService {
                 .map(assigned -> mapToDTO(assigned, new AssignedDTO()))
                 .orElseThrow(NotFoundException::new);
     }
+    public YetAnotherAssignedDTO getbyfs(final Integer idfs) {
+        final FlightSchedule flightSchedule = flightScheduleRepository.findById(idfs)
+                .orElseThrow(NotFoundException::new);
+        final Assigned flightAssigned = assignedRepository.findFirstByFlight(flightSchedule);
+        return convertToDTO(flightAssigned);
+    }
 
     public Integer create(final AssignedDTO assignedDTO) {
         final Assigned assigned = new Assigned();
@@ -119,10 +125,6 @@ public class AssignedService {
     private YetAnotherAssignedDTO convertToDTO(Assigned assigned) {
         YetAnotherFsDTO fdt= new YetAnotherFsDTO();
         YetAnotherAssignedDTO dto = new YetAnotherAssignedDTO();
-        System.out.println("assigned.getFlight().getIdfs()");
-        System.out.println(assigned.getFlight().getIdfs());
-        System.out.println("assigned.getFlight().getIdfs()");
-
         fdt.setterForAll(assigned.getFlight());
         dto.setId(Math.toIntExact(assigned.getId()));
         dto.setFlight(fdt);

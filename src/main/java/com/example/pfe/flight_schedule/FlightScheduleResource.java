@@ -54,6 +54,13 @@ public class FlightScheduleResource {
         flightScheduleService.update(idfs, flightScheduleDTO);
         return ResponseEntity.ok(idfs);
     }
+    @PutMapping("delay/{idfs}")
+    public ResponseEntity<Integer> updateDelayed(
+            @PathVariable(name = "idfs") final Integer idfs,
+            @RequestBody @Valid final FlightScheduleDTO flightScheduleDTO) {
+        flightScheduleService.updateDelayed(idfs, flightScheduleDTO);
+        return ResponseEntity.ok(idfs);
+    }
 
     @DeleteMapping("/{idfs}")
     @ApiResponse(responseCode = "204")

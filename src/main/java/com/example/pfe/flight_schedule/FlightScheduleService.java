@@ -67,11 +67,20 @@ public class FlightScheduleService {
         final FlightSchedule flightSchedule = flightScheduleRepository.findById(idfs)
                 .orElseThrow(NotFoundException::new);
         mapToEntity(flightScheduleDTO, flightSchedule);
+        flightScheduleDTO.setDelay(!flightScheduleDTO.getDelay());
         flightScheduleRepository.save(flightSchedule);
     }
 
     public void delete(final Integer idfs) {
         flightScheduleRepository.deleteById(idfs);
+
+    }
+    public void updateDelayed(final Integer idfs, final FlightScheduleDTO flightScheduleDTO) {
+        if (!(assignedRepository.existsByFlightIdfs(idfs))) {
+            final FlightSchedule flightSchedule = flightScheduleRepository.findById(idfs)
+                    .orElseThrow(NotFoundException::new);
+            mapToEntity(flightScheduleDTO, flightSchedule);
+            flightScheduleRepository.save(flightSchedule); }
     }
 
     public FlightScheduleDTO mapToDTO(final FlightSchedule flightSchedule,
@@ -143,5 +152,6 @@ public class FlightScheduleService {
         }
         return null;
     }
+
 
 }

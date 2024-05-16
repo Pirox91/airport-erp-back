@@ -22,7 +22,6 @@ public interface AssignedRepository extends JpaRepository<Assigned, Integer> {
     Assigned findFirstByPnc2(User user);
 
     Assigned findFirstByPnc3(User user);
-
     boolean existsByFlightIdfs(Integer idfs);
     @Query("SELECT a FROM Assigned a WHERE a.pilot.id = :userId OR a.copilot.id = :userId OR a.pnc.id = :userId OR a.pnc2.id = :userId OR a.pnc3.id = :userId")
     List<Assigned> findByUserId(@Param("userId") Long userId);

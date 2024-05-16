@@ -21,9 +21,10 @@ public class YetAnotherFsDTO {
     private LocalDateTime departure;
 
     private AirplaneDTO airplane;
-
+    private Boolean delay;
     private Set<YetAnotherPathDTO> path;
     public void setterForAll(FlightSchedule flightSchedule){
+        this.delay=flightSchedule.getDelay();
         this.setIdfs(flightSchedule.getIdfs());
         this.setArrival(flightSchedule.getArrival());
         this.setDeparture(flightSchedule.getDeparture());
@@ -38,7 +39,7 @@ public class YetAnotherFsDTO {
             yetAnotherSerieDTO.setDurration(path.getSerie().getDurration());
             yetAnotherSerieDTO.setDestination(new AirportDTO(path.getSerie().getDestination().getIdarpt(),path.getSerie().getDestination().getName()));
             yetAnotherSerieDTO.setDeparture(new AirportDTO(path.getSerie().getDeparture().getIdarpt(),path.getSerie().getDeparture().getName()));
-
+    
             YetAnotherPathDTO dto = new YetAnotherPathDTO(
                     path.getId(),path.getDeparture(),
                     path.getStopover(),

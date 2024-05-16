@@ -5,6 +5,8 @@ import jakarta.validation.constraints.Size;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.time.LocalDateTime;
+
 
 @Getter
 @Setter
@@ -29,6 +31,7 @@ public class  UserDTO {
     @NotNull
     @Size(max = 255)
     private String surname;
+    private LocalDateTime birthday;
 
     private Role role;
     private Type type;

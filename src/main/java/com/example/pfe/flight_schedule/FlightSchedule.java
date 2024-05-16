@@ -45,7 +45,7 @@ public class FlightSchedule {
 
     @Column(nullable = false)
     private LocalDateTime departure;
-
+    private Boolean delay;
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "airplane_id", nullable = false)
     private Airplane airplane;

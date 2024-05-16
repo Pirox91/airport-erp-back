@@ -35,6 +35,10 @@ public class AssignedResource {
     public ResponseEntity<AssignedDTO> getAssigned(@PathVariable(name = "id") final Integer id) {
         return ResponseEntity.ok(assignedService.get(id));
     }
+    @GetMapping("fs/{idfs}")
+    public ResponseEntity<YetAnotherAssignedDTO> getAssignedbyFs(@PathVariable(name = "idfs") final Integer idfs) {
+        return ResponseEntity.ok(assignedService.getbyfs(idfs));
+    }
     @GetMapping("/assignments/{userId}")
     public ResponseEntity<List<YetAnotherAssignedDTO>> getAssignmentsByUserId(@PathVariable Long userId) {
         List<YetAnotherAssignedDTO> assignments = assignedService.getAssignmentsByUser(userId);

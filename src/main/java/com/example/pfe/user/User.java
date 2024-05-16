@@ -5,6 +5,7 @@ import com.example.pfe.request.Request;
 import com.example.pfe.token.Token;
 import jakarta.persistence.*;
 
+import java.time.LocalDateTime;
 import java.util.Collection;
 import java.util.List;
 import java.util.Set;
@@ -54,6 +55,7 @@ public class User implements UserDetails {
 
     @Column
     private String password;
+    private LocalDateTime birthday;
 
     @Column(nullable = false)
     private String name;
