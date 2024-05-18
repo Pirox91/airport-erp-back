@@ -45,6 +45,16 @@ public class RequestService {
         mapToEntity(requestDTO, request);
         requestRepository.save(request);
     }
+    public void updateViewed(final Integer id) {
+        final Request request = requestRepository.findById(id)
+                .orElseThrow(NotFoundException::new);
+        RequestDTO requestDTO= new RequestDTO();
+        mapToDTO(request, requestDTO);
+        requestDTO.setViewed(false);
+        mapToEntity(requestDTO, request);
+        requestRepository.save(request);
+    }
+
 
     public void delete(final Integer id) {
         requestRepository.deleteById(id);
@@ -52,6 +62,7 @@ public class RequestService {
 
     private RequestDTO mapToDTO(final Request request, final RequestDTO requestDTO) {
         requestDTO.setId(request.getId());
+        requestDTO.setViewed(request.getViewed());
         requestDTO.setState(request.getState());
         requestDTO.setBody(request.getBody());
         requestDTO.setTitle(request.getTitle());
@@ -61,6 +72,7 @@ public class RequestService {
 
     private Request mapToEntity(final RequestDTO requestDTO, final Request request) {
         request.setState(requestDTO.getState());
+        request.setViewed(requestDTO.getViewed());
         request.setBody(requestDTO.getBody());
         request.setTitle(requestDTO.getTitle());
         final User user = requestDTO.getUser() == null ? null : userRepository.findById(requestDTO.getUser())

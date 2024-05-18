@@ -41,6 +41,8 @@ public class Request {
 
     @Column(nullable = false)
     private String title;
+    @Column(nullable = false)
+    private Boolean viewed;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")

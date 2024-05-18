@@ -64,11 +64,13 @@ public class FlightScheduleService {
         return flightScheduleRepository.save(flightSchedule).getIdfs();
     }
 
-    public void updateDelayed(final Integer idfs, final FlightScheduleDTO flightScheduleDTO) {
+    public void updateDelayed(final Integer idfs) {
         final FlightSchedule flightSchedule = flightScheduleRepository.findById(idfs)
                 .orElseThrow(NotFoundException::new);
-        mapToEntity(flightScheduleDTO, flightSchedule);
+        FlightScheduleDTO flightScheduleDTO= new FlightScheduleDTO();
+        mapToDTO(flightSchedule, flightScheduleDTO);
         flightScheduleDTO.setDelay(!flightScheduleDTO.getDelay());
+        mapToEntity(flightScheduleDTO, flightSchedule);
         flightScheduleRepository.save(flightSchedule);
     }
 

@@ -17,6 +17,8 @@ public class RequestDTO {
 
     @NotNull
     private String body;
+    @NotNull
+    private Boolean viewed;
 
     @NotNull
     @Size(max = 255)

@@ -36,6 +36,7 @@ public class RequestResource {
         return ResponseEntity.ok(requestService.get(id));
     }
 
+
     @PostMapping
     @ApiResponse(responseCode = "201")
     public ResponseEntity<Integer> createRequest(@RequestBody @Valid final RequestDTO requestDTO) {
@@ -47,6 +48,11 @@ public class RequestResource {
     public ResponseEntity<Integer> updateRequest(@PathVariable(name = "id") final Integer id,
             @RequestBody @Valid final RequestDTO requestDTO) {
         requestService.update(id, requestDTO);
+        return ResponseEntity.ok(id);
+    }
+    @PutMapping("/{id}")
+    public ResponseEntity<Integer> updateRequestview(@PathVariable(name = "id") final Integer id) {
+        requestService.updateViewed(id);
         return ResponseEntity.ok(id);
     }
 

@@ -56,9 +56,8 @@ public class FlightScheduleResource {
     }
     @PutMapping("delay/{idfs}")
     public ResponseEntity<Integer> updateDelayed(
-            @PathVariable(name = "idfs") final Integer idfs,
-            @RequestBody @Valid final FlightScheduleDTO flightScheduleDTO) {
-        flightScheduleService.updateDelayed(idfs, flightScheduleDTO);
+            @PathVariable(name = "idfs") final Integer idfs) {
+        flightScheduleService.updateDelayed(idfs);
         return ResponseEntity.ok(idfs);
     }
 
