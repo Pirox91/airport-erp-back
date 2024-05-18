@@ -59,7 +59,7 @@ public class AssignedResource {
     public ResponseEntity<Integer> updateAssigned(@PathVariable(name = "id") final Integer id,
             @RequestBody @Valid final AssignedDTO assignedDTO) {
         assignedService.update(id, assignedDTO);
-        notificationService.sendNotification("Data in the database has been changed");
+        notificationService.sendNotification(assignedDTO);
 
         return ResponseEntity.ok(id);
     }

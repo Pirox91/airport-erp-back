@@ -50,8 +50,8 @@ public class RequestResource {
         requestService.update(id, requestDTO);
         return ResponseEntity.ok(id);
     }
-    @PutMapping("/{id}")
-    public ResponseEntity<Integer> updateRequestview(@PathVariable(name = "id") final Integer id) {
+    @PutMapping("view/{id}")
+    public ResponseEntity<Integer> updateRequestView(@PathVariable(name = "id") final Integer id) {
         requestService.updateViewed(id);
         return ResponseEntity.ok(id);
     }
