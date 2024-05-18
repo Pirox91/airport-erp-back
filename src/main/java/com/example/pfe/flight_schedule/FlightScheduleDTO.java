@@ -14,13 +14,13 @@ public class FlightScheduleDTO {
 
     private Integer idfs;
 
-    @NotNull
+
     private LocalDateTime arrival;
 
-    @NotNull
+
     private LocalDateTime departure;
 
-    @NotNull
+
     private Integer airplane;
     private Boolean delay;
 

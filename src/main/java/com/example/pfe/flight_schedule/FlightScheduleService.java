@@ -59,11 +59,12 @@ public class FlightScheduleService {
 
     public Integer create(final FlightScheduleDTO flightScheduleDTO) {
         final FlightSchedule flightSchedule = new FlightSchedule();
+        flightSchedule.setDelay(false);
         mapToEntity(flightScheduleDTO, flightSchedule);
         return flightScheduleRepository.save(flightSchedule).getIdfs();
     }
 
-    public void update(final Integer idfs, final FlightScheduleDTO flightScheduleDTO) {
+    public void updateDelayed(final Integer idfs, final FlightScheduleDTO flightScheduleDTO) {
         final FlightSchedule flightSchedule = flightScheduleRepository.findById(idfs)
                 .orElseThrow(NotFoundException::new);
         mapToEntity(flightScheduleDTO, flightSchedule);
@@ -75,7 +76,7 @@ public class FlightScheduleService {
         flightScheduleRepository.deleteById(idfs);
 
     }
-    public void updateDelayed(final Integer idfs, final FlightScheduleDTO flightScheduleDTO) {
+    public void update(final Integer idfs, final FlightScheduleDTO flightScheduleDTO) {
         if (!(assignedRepository.existsByFlightIdfs(idfs))) {
             final FlightSchedule flightSchedule = flightScheduleRepository.findById(idfs)
                     .orElseThrow(NotFoundException::new);
@@ -94,6 +95,7 @@ public class FlightScheduleService {
     }
     public YetAnotherFsDTO mapToAnotherDTO(final FlightSchedule flightSchedule,
                            final YetAnotherFsDTO flightScheduleDTO){
+        flightScheduleDTO.setDelay(flightScheduleDTO.getDelay());
         flightScheduleDTO.setIdfs(flightSchedule.getIdfs());
         flightScheduleDTO.setArrival(flightSchedule.getArrival());
         flightScheduleDTO.setDeparture(flightSchedule.getDeparture());
@@ -124,8 +126,10 @@ public class FlightScheduleService {
 
     private FlightSchedule mapToEntity(final FlightScheduleDTO flightScheduleDTO,
             final FlightSchedule flightSchedule) {
+        flightSchedule.setDelay(flightScheduleDTO.getDelay());
         flightSchedule.setArrival(flightScheduleDTO.getArrival());
         flightSchedule.setDeparture(flightScheduleDTO.getDeparture());
+
         final Airplane airplane = flightScheduleDTO.getAirplane() == null ? null : airplaneRepository.findById(flightScheduleDTO.getAirplane())
                 .orElseThrow(() -> new NotFoundException("airplane not found"));
         flightSchedule.setAirplane(airplane);

@@ -1,5 +1,6 @@
 package com.example.pfe.assigned;
 
+import com.example.pfe.controllers.notification.NotificationService;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import jakarta.validation.Valid;
 import java.util.List;
@@ -21,6 +22,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class AssignedResource {
 
     private final AssignedService assignedService;
+    private NotificationService notificationService;
 
     public AssignedResource(final AssignedService assignedService) {
         this.assignedService = assignedService;
@@ -57,6 +59,8 @@ public class AssignedResource {
     public ResponseEntity<Integer> updateAssigned(@PathVariable(name = "id") final Integer id,
             @RequestBody @Valid final AssignedDTO assignedDTO) {
         assignedService.update(id, assignedDTO);
+        notificationService.sendNotification("Data in the database has been changed");
+
         return ResponseEntity.ok(id);
     }
 
