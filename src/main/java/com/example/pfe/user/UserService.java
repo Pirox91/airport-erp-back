@@ -68,7 +68,7 @@ public class UserService {
         userDTO.setAvailable(user.getAvailable());
         userDTO.setValiditelicense(user.getValiditelicense());
         userDTO.setEmail(user.getEmail());
-        userDTO.setPassword(user.getPassword());
+
         userDTO.setName(user.getName());
         userDTO.setSurname(user.getSurname());
         userDTO.setRole(user.getRole());
@@ -83,7 +83,7 @@ public class UserService {
         user.setBirthday(userDTO.getBirthday());
         user.setValiditelicense(userDTO.getValiditelicense());
         user.setEmail(userDTO.getEmail());
-        user.setPassword(userDTO.getPassword());
+
         user.setName(userDTO.getName());
         user.setSurname(userDTO.getSurname());
         user.setRole(userDTO.getRole());

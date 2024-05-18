@@ -9,6 +9,8 @@ import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.SequenceGenerator;
 import java.util.Set;
+
+import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -35,8 +37,11 @@ public class Airplane {
     @Column(nullable = false)
     private Boolean available;
 
+
     @Column(nullable = false)
     private String model;
+
+    private String name;
 
     @OneToMany(mappedBy = "airplane")
     private Set<FlightSchedule> schedule;

@@ -100,7 +100,8 @@ public class FlightScheduleService {
         flightScheduleDTO.setAirplane(flightSchedule.getAirplane() == null ? null :new AirplaneDTO(
                 flightSchedule.getAirplane().getIdap(),
                 flightSchedule.getAirplane().getAvailable(),
-                flightSchedule.getAirplane().getModel())
+                flightSchedule.getAirplane().getModel(),
+                flightSchedule.getAirplane().getName())
         );
         Set<YetAnotherPathDTO> yetAnotherPathDTO= new HashSet<>();
         YetAnotherSerieDTO yetAnotherSerieDTO= new YetAnotherSerieDTO();
