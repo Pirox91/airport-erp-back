@@ -50,7 +50,7 @@ public class RequestService {
                 .orElseThrow(NotFoundException::new);
         RequestDTO requestDTO= new RequestDTO();
         mapToDTO(request, requestDTO);
-        requestDTO.setViewed(false);
+        requestDTO.setViewed(true);
         mapToEntity(requestDTO, request);
         requestRepository.save(request);
     }

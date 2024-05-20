@@ -26,17 +26,18 @@ public class AssignedService {
         this.userRepository = userRepository;
     }
 
-    public List<AssignedDTO> findAll() {
+    public List<YetAnotherAssignedDTO> findAll() {
         final List<Assigned> assigneds = assignedRepository.findAll(Sort.by("id"));
         return assigneds.stream()
-                .map(assigned -> mapToDTO(assigned, new AssignedDTO()))
+                .map(assigned -> convertToDTO(assigned))
                 .toList();
     }
 
-    public AssignedDTO get(final Integer id) {
-        return assignedRepository.findById(id)
-                .map(assigned -> mapToDTO(assigned, new AssignedDTO()))
+    public YetAnotherAssignedDTO get(final Integer id) {
+        Assigned assigned= assignedRepository.findById(id)
                 .orElseThrow(NotFoundException::new);
+               return (convertToDTO(assigned));
+
     }
     public YetAnotherAssignedDTO getbyfs(final Integer idfs) {
         final FlightSchedule flightSchedule = flightScheduleRepository.findById(idfs)
@@ -126,8 +127,8 @@ public class AssignedService {
         YetAnotherFsDTO fdt= new YetAnotherFsDTO();
         YetAnotherAssignedDTO dto = new YetAnotherAssignedDTO();
         fdt.setterForAll(assigned.getFlight());
-        dto.setId(Math.toIntExact(assigned.getId()));
         dto.setFlight(fdt);
+        dto.setId(assigned.getId());
         dto.setPilot(convertUserToDTO(assigned.getPilot()));
         dto.setCoPilot(convertUserToDTO(assigned.getCopilot()));
         dto.setPnc(convertUserToDTO(assigned.getPnc()));

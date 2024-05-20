@@ -1,6 +1,8 @@
 package com.example.pfe.path;
 
 import jakarta.validation.constraints.NotNull;
+
+import java.sql.Time;
 import java.time.LocalDateTime;
 import lombok.Getter;
 import lombok.Setter;
@@ -16,7 +18,7 @@ public class PathDTO {
     private LocalDateTime departure;
 
     @NotNull
-    private LocalDateTime stopover;
+    private Time stopover;
 
     @NotNull
     private Integer flight;

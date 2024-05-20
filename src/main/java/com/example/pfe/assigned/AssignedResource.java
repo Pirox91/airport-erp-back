@@ -29,12 +29,12 @@ public class AssignedResource {
     }
 
     @GetMapping
-    public ResponseEntity<List<AssignedDTO>> getAllAssigneds() {
+    public ResponseEntity<List<YetAnotherAssignedDTO>> getAllAssigneds() {
         return ResponseEntity.ok(assignedService.findAll());
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<AssignedDTO> getAssigned(@PathVariable(name = "id") final Integer id) {
+    public ResponseEntity<YetAnotherAssignedDTO> getAssigned(@PathVariable(name = "id") final Integer id) {
         return ResponseEntity.ok(assignedService.get(id));
     }
     @GetMapping("fs/{idfs}")

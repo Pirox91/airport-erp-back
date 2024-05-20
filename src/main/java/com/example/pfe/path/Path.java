@@ -11,6 +11,8 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.SequenceGenerator;
+
+import java.sql.Time;
 import java.time.LocalDateTime;
 import lombok.Getter;
 import lombok.Setter;
@@ -39,7 +41,7 @@ public class Path {
     private LocalDateTime departure;
 
     @Column(nullable = false)
-    private LocalDateTime stopover;
+    private Time stopover;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "flight_id", nullable = false)

@@ -6,6 +6,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.sql.Time;
 import java.time.LocalDateTime;
 @Getter
 @Setter
@@ -18,7 +19,7 @@ public class YetAnotherPathDTO {
     private LocalDateTime departure;
 
     @NotNull
-    private LocalDateTime stopover;
+    private Time stopover;
 
     @NotNull
     private YetAnotherSerieDTO serie;

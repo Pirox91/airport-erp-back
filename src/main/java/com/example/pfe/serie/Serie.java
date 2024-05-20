@@ -13,6 +13,8 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.SequenceGenerator;
+
+import java.sql.Time;
 import java.time.LocalTime;
 import java.util.Set;
 import lombok.Getter;
@@ -39,7 +41,7 @@ public class Serie {
     private Integer ids;
 
     @Column(nullable = false)
-    private LocalTime durration;
+    private Time durration;
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "departure_id", nullable = false)

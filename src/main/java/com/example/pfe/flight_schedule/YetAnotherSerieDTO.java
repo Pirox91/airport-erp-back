@@ -8,6 +8,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.sql.Time;
 import java.time.LocalTime;
 @Getter
 @Setter
@@ -17,7 +18,7 @@ public class YetAnotherSerieDTO {
 
     @NotNull
     @Schema(type = "string", example = "18:30")
-    private LocalTime durration;
+    private Time durration;
 
     @NotNull
     private AirportDTO departure;

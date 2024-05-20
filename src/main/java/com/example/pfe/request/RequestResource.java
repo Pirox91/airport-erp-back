@@ -40,6 +40,7 @@ public class RequestResource {
     @PostMapping
     @ApiResponse(responseCode = "201")
     public ResponseEntity<Integer> createRequest(@RequestBody @Valid final RequestDTO requestDTO) {
+        requestDTO.setViewed(false);
         final Integer createdId = requestService.create(requestDTO);
         return new ResponseEntity<>(createdId, HttpStatus.CREATED);
     }
