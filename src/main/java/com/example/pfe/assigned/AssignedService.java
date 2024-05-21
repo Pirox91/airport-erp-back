@@ -4,6 +4,9 @@ import com.example.pfe.flight_schedule.*;
 import com.example.pfe.user.User;
 import com.example.pfe.user.UserRepository;
 import com.example.pfe.util.NotFoundException;
+
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 
 import org.springframework.data.domain.Sort;
@@ -17,7 +20,6 @@ public class AssignedService {
     private final AssignedRepository assignedRepository;
     private final FlightScheduleRepository flightScheduleRepository;
     private final UserRepository userRepository;
-    private FlightScheduleService fss;
     public AssignedService(final AssignedRepository assignedRepository,
             final FlightScheduleRepository flightScheduleRepository,
             final UserRepository userRepository) {
@@ -31,6 +33,14 @@ public class AssignedService {
         return assigneds.stream()
                 .map(assigned -> convertToDTO(assigned))
                 .toList();
+    }
+    public List<UserDTO> findAvailable(final LocalDateTime t1, final LocalDateTime t2){
+        final List <User>availableUsers=assignedRepository.findAvailableUsersBetween(t1,t2);
+
+         return availableUsers.stream()
+                 .map(this::convertUserToDTO)
+                 .toList();
+
     }
 
     public YetAnotherAssignedDTO get(final Integer id) {

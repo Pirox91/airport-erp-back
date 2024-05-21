@@ -3,6 +3,8 @@ package com.example.pfe.assigned;
 import com.example.pfe.controllers.notification.NotificationService;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import jakarta.validation.Valid;
+
+import java.time.LocalDateTime;
 import java.util.List;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -45,6 +47,11 @@ public class AssignedResource {
     public ResponseEntity<List<YetAnotherAssignedDTO>> getAssignmentsByUserId(@PathVariable Long userId) {
         List<YetAnotherAssignedDTO> assignments = assignedService.getAssignmentsByUser(userId);
         return ResponseEntity.ok(assignments);
+    }
+    @GetMapping("/available/{t1}/{t2}")
+    public ResponseEntity<List<UserDTO>>getAvailableAssignedUsers(@PathVariable LocalDateTime t1, @PathVariable LocalDateTime t2) {
+        List<UserDTO> users= assignedService.findAvailable(t1,t2);
+        return ResponseEntity.ok(users);
     }
 
     @PostMapping

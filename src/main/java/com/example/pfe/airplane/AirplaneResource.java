@@ -71,7 +71,7 @@ public class AirplaneResource {
     @GetMapping("/available/{time}")
     public ResponseEntity<List<Object[]>> getAvailableAirplanesWithNextDepartures(
             @PathVariable LocalDateTime time) {
-        System.out.println("nahna lahne");
+
 
         List<Object[]> availableAirplanes = airplaneService.getAvailableAirplanesWithNextDeparture(time);
         System.out.println(availableAirplanes);

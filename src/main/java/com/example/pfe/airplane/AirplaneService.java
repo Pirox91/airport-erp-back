@@ -90,7 +90,7 @@ public class AirplaneService {
         return null;
     }
     public List<Object[]> getAvailableAirplanesWithNextDeparture(LocalDateTime time) {
-        System.out.println();
+
         return airplaneRepository.findAvailableAirplanesWithNextDeparture(time);
     }
 
