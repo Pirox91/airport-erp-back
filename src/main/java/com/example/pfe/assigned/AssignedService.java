@@ -136,7 +136,7 @@ public class AssignedService {
     private YetAnotherAssignedDTO convertToDTO(Assigned assigned) {
         YetAnotherFsDTO fdt= new YetAnotherFsDTO();
         YetAnotherAssignedDTO dto = new YetAnotherAssignedDTO();
-        fdt.setterForAll(assigned.getFlight());
+        fdt.constru(assigned.getFlight());
         dto.setFlight(fdt);
         dto.setId(assigned.getId());
         dto.setPilot(convertUserToDTO(assigned.getPilot()));

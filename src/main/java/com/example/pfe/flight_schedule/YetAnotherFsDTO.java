@@ -23,7 +23,7 @@ public class YetAnotherFsDTO {
     private AirplaneDTO airplane;
     private Boolean delay;
     private Set<YetAnotherPathDTO> path;
-    public void setterForAll(FlightSchedule flightSchedule){
+    public void constru(FlightSchedule flightSchedule){
         this.delay=flightSchedule.getDelay();
         this.setIdfs(flightSchedule.getIdfs());
         this.setArrival(flightSchedule.getArrival());
