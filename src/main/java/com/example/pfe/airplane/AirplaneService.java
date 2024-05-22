@@ -62,13 +62,16 @@ public class AirplaneService {
         airplaneDTO.setIdap(airplane.getIdap());
         airplaneDTO.setAvailable(airplane.getAvailable());
         airplaneDTO.setModel(airplane.getModel());
+        airplaneDTO.setName(airplane.getName());
         return airplaneDTO;
     }
 
     private Airplane mapToEntity(final AirplaneDTO airplaneDTO, final Airplane airplane) {
         airplane.setAvailable(airplaneDTO.getAvailable());
         airplane.setModel(airplaneDTO.getModel());
-        return airplane;
+        airplane.setIdap(airplaneDTO.getIdap());
+        airplane.setName(airplaneDTO.getName());
+    return airplane;
     }
 
     public ReferencedWarning getReferencedWarning(final Integer idap) {

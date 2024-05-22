@@ -20,7 +20,7 @@ public class AirplaneDTO {
     private Boolean available;
 
     @NotNull
-    private String nom;
+    private String name;
     @NotNull
     @Size(max = 255)
     private String model;
