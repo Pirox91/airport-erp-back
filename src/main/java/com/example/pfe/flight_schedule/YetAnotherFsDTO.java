@@ -24,7 +24,7 @@ public class YetAnotherFsDTO {
     private Boolean delay;
     private Set<YetAnotherPathDTO> path;
     public void constru(FlightSchedule flightSchedule){
-        this.delay=flightSchedule.getDelay();
+        this.setDelay(flightSchedule.getDelay());
         this.setIdfs(flightSchedule.getIdfs());
         this.setArrival(flightSchedule.getArrival());
         this.setDeparture(flightSchedule.getDeparture());
@@ -35,8 +35,9 @@ public class YetAnotherFsDTO {
                 flightSchedule.getAirplane().getName())
         );
         Set<YetAnotherPathDTO> yetAnotherPathDTO= new HashSet<>();
-        YetAnotherSerieDTO yetAnotherSerieDTO= new YetAnotherSerieDTO();
         for (Path path : flightSchedule.getPath()) {
+            YetAnotherSerieDTO yetAnotherSerieDTO= new YetAnotherSerieDTO();
+
             yetAnotherSerieDTO.setDurration(path.getSerie().getDurration());
             yetAnotherSerieDTO.setDestination(new AirportDTO(path.getSerie().getDestination().getIdarpt(),path.getSerie().getDestination().getName()));
             yetAnotherSerieDTO.setDeparture(new AirportDTO(path.getSerie().getDeparture().getIdarpt(),path.getSerie().getDeparture().getName()));

@@ -3,7 +3,6 @@ package com.example.pfe.flight_schedule;
 import com.example.pfe.airplane.Airplane;
 import com.example.pfe.airplane.AirplaneDTO;
 import com.example.pfe.airplane.AirplaneRepository;
-import com.example.pfe.airplane.AirplaneService;
 import com.example.pfe.airport.AirportDTO;
 import com.example.pfe.assigned.Assigned;
 import com.example.pfe.assigned.AssignedRepository;
@@ -19,7 +18,6 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 
@@ -45,7 +43,7 @@ public class FlightScheduleService {
     }
 
     public List<YetAnotherFsDTO> findAll() {
-        final List<FlightSchedule> flightSchedules = flightScheduleRepository.findAll(Sort.by("idfs"));
+        final List<FlightSchedule> flightSchedules = flightScheduleRepository.findAll();
         return flightSchedules.stream()
                 .map(flightSchedule -> mapToAnotherDTO(flightSchedule, new YetAnotherFsDTO()))
                 .toList();
@@ -96,34 +94,41 @@ public class FlightScheduleService {
         return flightScheduleDTO;
     }
     public YetAnotherFsDTO mapToAnotherDTO(final FlightSchedule flightSchedule,
-                           final YetAnotherFsDTO flightScheduleDTO){
-        flightScheduleDTO.setDelay(flightScheduleDTO.getDelay());
+                                           final YetAnotherFsDTO flightScheduleDTO) {
+        flightScheduleDTO.setDelay(flightSchedule.getDelay());
         flightScheduleDTO.setIdfs(flightSchedule.getIdfs());
         flightScheduleDTO.setArrival(flightSchedule.getArrival());
         flightScheduleDTO.setDeparture(flightSchedule.getDeparture());
-        flightScheduleDTO.setAirplane(flightSchedule.getAirplane() == null ? null :new AirplaneDTO(
+        flightScheduleDTO.setAirplane(flightSchedule.getAirplane() == null ? null : new AirplaneDTO(
                 flightSchedule.getAirplane().getIdap(),
                 flightSchedule.getAirplane().getAvailable(),
-                flightSchedule.getAirplane().getModel(),
-                flightSchedule.getAirplane().getName())
+                flightSchedule.getAirplane().getName(),
+                flightSchedule.getAirplane().getModel())
         );
-        Set<YetAnotherPathDTO> yetAnotherPathDTO= new HashSet<>();
-        YetAnotherSerieDTO yetAnotherSerieDTO= new YetAnotherSerieDTO();
+        Set<YetAnotherPathDTO> yetAnotherPathDTO = new HashSet<>();
+
         for (Path path : flightSchedule.getPath()) {
+            YetAnotherSerieDTO yetAnotherSerieDTO = new YetAnotherSerieDTO();
+            yetAnotherSerieDTO.setIds(path.getSerie().getIds());
             yetAnotherSerieDTO.setDurration(path.getSerie().getDurration());
-            yetAnotherSerieDTO.setDestination(new AirportDTO(path.getSerie().getDestination().getIdarpt(),path.getSerie().getDestination().getName()));
-            yetAnotherSerieDTO.setDeparture(new AirportDTO(path.getSerie().getDeparture().getIdarpt(),path.getSerie().getDeparture().getName()));
+            yetAnotherSerieDTO.setDestination(new AirportDTO(path.getSerie().getDestination().getIdarpt(), path.getSerie().getDestination().getName()));
+            yetAnotherSerieDTO.setDeparture(new AirportDTO(path.getSerie().getDeparture().getIdarpt(), path.getSerie().getDeparture().getName()));
 
             YetAnotherPathDTO dto = new YetAnotherPathDTO(
-                    path.getId(),path.getDeparture(),
+                    path.getId(), path.getDeparture(),
                     path.getStopover(),
-                    yetAnotherSerieDTO);
-            yetAnotherPathDTO.add(dto);
+                    yetAnotherSerieDTO
+            );
 
+
+            yetAnotherPathDTO.add(dto);
         }
+
         flightScheduleDTO.setPath(yetAnotherPathDTO);
         return flightScheduleDTO;
     }
+
+
 
 
     private FlightSchedule mapToEntity(final FlightScheduleDTO flightScheduleDTO,

@@ -59,6 +59,7 @@ public class AssignedResource {
     public ResponseEntity<Integer> createAssigned(
             @RequestBody @Valid final AssignedDTO assignedDTO) {
         final Integer createdId = assignedService.create(assignedDTO);
+        notificationService.sendNotification(assignedDTO);
         return new ResponseEntity<>(createdId, HttpStatus.CREATED);
     }
 

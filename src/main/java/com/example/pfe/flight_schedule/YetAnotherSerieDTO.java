@@ -9,13 +9,13 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.sql.Time;
-import java.time.LocalTime;
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
 public class YetAnotherSerieDTO {
-
+    @NotNull
+    private Integer ids;
     @NotNull
     @Schema(type = "string", example = "18:30")
     private Time durration;

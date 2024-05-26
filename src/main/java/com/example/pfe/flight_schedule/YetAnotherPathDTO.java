@@ -13,14 +13,12 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @NoArgsConstructor
 public class YetAnotherPathDTO {
-    private Integer id;
 
+    private Integer id;
     @NotNull
     private LocalDateTime departure;
-
     @NotNull
     private Time stopover;
-
     @NotNull
     private YetAnotherSerieDTO serie;
 }
