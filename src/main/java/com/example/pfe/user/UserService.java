@@ -2,7 +2,6 @@ package com.example.pfe.user;
 
 import com.example.pfe.assigned.Assigned;
 import com.example.pfe.assigned.AssignedRepository;
-import com.example.pfe.flight_schedule.FlightScheduleRepository;
 import com.example.pfe.request.Request;
 import com.example.pfe.request.RequestRepository;
 import com.example.pfe.util.NotFoundException;
@@ -39,6 +38,11 @@ public class UserService {
     public UserDTO get(final Integer id) {
         return userRepository.findById(id)
                 .map(user -> mapToDTO(user, new UserDTO()))
+                .orElseThrow(NotFoundException::new);
+    }
+  public UserDTO getbymail(final String mail) {
+        return userRepository.findByEmail(mail)
+                .map(user -> mapToDTO( (User) user, new UserDTO()))
                 .orElseThrow(NotFoundException::new);
     }
 

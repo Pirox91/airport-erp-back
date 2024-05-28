@@ -37,6 +37,11 @@ public class UserResource {
     public ResponseEntity<UserDTO> getUser(@PathVariable(name = "id") final Integer id) {
         return ResponseEntity.ok(userService.get(id));
     }
+    @GetMapping("/mail/{mail}")
+    public ResponseEntity<UserDTO> getbymail(@PathVariable(name = "mail") final String mail) {
+        return ResponseEntity.ok(userService.getbymail(mail));
+    }
+
 
     @PostMapping
     @ApiResponse(responseCode = "201")
