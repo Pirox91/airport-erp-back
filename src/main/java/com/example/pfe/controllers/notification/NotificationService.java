@@ -12,6 +12,6 @@ public class NotificationService {
     private SimpMessagingTemplate messagingTemplate;
 
     public void sendNotification(AssignedDTO message) {
-        messagingTemplate.convertAndSend("/topic/notifications", message);
+        messagingTemplate.convertAndSend("/notifications", message);
     }
 }

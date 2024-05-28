@@ -1,6 +1,7 @@
 package com.example.pfe.auth;
 
 import com.example.pfe.user.Role;
+import com.example.pfe.user.Type;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -17,6 +18,7 @@ public class RegisterRequest {
     private String email;
     private String password;
     private Role role;
+    private Type type;
 
 
 }

@@ -9,6 +9,7 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 
+import jakarta.validation.constraints.Null;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import java.util.stream.Collectors;
@@ -37,9 +38,9 @@ public class AssignedService {
     public List<UserDTO> findAvailable(final LocalDateTime t1, final LocalDateTime t2){
         final List <User>availableUsers=assignedRepository.findAvailableUsersBetween(t1,t2);
 
-         return availableUsers.stream()
-                 .map(this::convertUserToDTO)
-                 .toList();
+        return availableUsers.stream()
+                .map(user -> convertUserToDTO(user))
+                .toList();
 
     }
 
@@ -155,7 +156,8 @@ public class AssignedService {
         userDTO.setId(Math.toIntExact(user.getId()));
         userDTO.setName(user.getName());
         userDTO.setSurname(user.getSurname());
-        userDTO.setType(user.getType().toString());
+        if(user.getType()!= null){
+        userDTO.setType(user.getType().toString());}
         return userDTO;
     }
 }
