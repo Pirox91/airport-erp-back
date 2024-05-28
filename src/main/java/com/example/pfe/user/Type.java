@@ -2,5 +2,6 @@ package com.example.pfe.user;
 
 public enum Type {
     PNC,
-    PNT
+    PNT,
+    NOT_APPLICABLE
 }
