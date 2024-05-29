@@ -14,9 +14,8 @@ import com.example.pfe.util.ReferencedWarning;
 import com.example.pfe.weekly.Weekly;
 import com.example.pfe.weekly.WeeklyRepository;
 
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
+import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Service;
 
@@ -105,8 +104,7 @@ public class FlightScheduleService {
                 flightSchedule.getAirplane().getName(),
                 flightSchedule.getAirplane().getModel())
         );
-        Set<YetAnotherPathDTO> yetAnotherPathDTO = new HashSet<>();
-
+        Set<YetAnotherPathDTO> yetAnotherPathDTO = new TreeSet<>(Comparator.comparing(YetAnotherPathDTO::getId));
         for (Path path : flightSchedule.getPath()) {
             YetAnotherSerieDTO yetAnotherSerieDTO = new YetAnotherSerieDTO();
             yetAnotherSerieDTO.setIds(path.getSerie().getIds());
@@ -128,6 +126,30 @@ public class FlightScheduleService {
         return flightScheduleDTO;
     }
 
+    public Set<YetAnotherPathDTO> mapAndFilterFlightScheduleToPaths(FlightSchedule flightSchedule) {
+        return flightSchedule.getPath().stream()
+                .filter(path -> path.getDeparture() != null) // Example filter condition
+                .sorted(Comparator.comparing(Path::getId))
+                .map(path -> {
+                    YetAnotherSerieDTO yetAnotherSerieDTO = new YetAnotherSerieDTO();
+                    yetAnotherSerieDTO.setIds(path.getSerie().getIds());
+                    yetAnotherSerieDTO.setDurration(path.getSerie().getDurration());
+                    yetAnotherSerieDTO.setDestination(new AirportDTO(
+                            path.getSerie().getDestination().getIdarpt(),
+                            path.getSerie().getDestination().getName()));
+                    yetAnotherSerieDTO.setDeparture(new AirportDTO(
+                            path.getSerie().getDeparture().getIdarpt(),
+                            path.getSerie().getDeparture().getName()));
+
+                    return new YetAnotherPathDTO(
+                            path.getId(),
+                            path.getDeparture(),
+                            path.getStopover(),
+                            yetAnotherSerieDTO
+                    );
+                })
+                .collect(Collectors.toCollection(HashSet::new));
+    }
 
 
 

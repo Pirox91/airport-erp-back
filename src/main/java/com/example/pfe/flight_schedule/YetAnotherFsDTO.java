@@ -7,8 +7,10 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.time.LocalDateTime;
+import java.util.Comparator;
 import java.util.HashSet;
 import java.util.Set;
+import java.util.TreeSet;
 
 @Getter
 @Setter
@@ -34,7 +36,7 @@ public class YetAnotherFsDTO {
                 flightSchedule.getAirplane().getModel(),
                 flightSchedule.getAirplane().getName())
         );
-        Set<YetAnotherPathDTO> yetAnotherPathDTO= new HashSet<>();
+        Set<YetAnotherPathDTO> yetAnotherPathDTO = new TreeSet<>(Comparator.comparing(YetAnotherPathDTO::getId));
         for (Path path : flightSchedule.getPath()) {
             YetAnotherSerieDTO yetAnotherSerieDTO= new YetAnotherSerieDTO();
 

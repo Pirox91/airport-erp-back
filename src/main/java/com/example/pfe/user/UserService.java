@@ -87,7 +87,6 @@ public class UserService {
         user.setBirthday(userDTO.getBirthday());
         user.setValiditelicense(userDTO.getValiditelicense());
         user.setEmail(userDTO.getEmail());
-
         user.setName(userDTO.getName());
         user.setSurname(userDTO.getSurname());
         user.setRole(userDTO.getRole());
