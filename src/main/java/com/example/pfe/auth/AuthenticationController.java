@@ -22,7 +22,7 @@ public class AuthenticationController {
     public ResponseEntity<AuthenticationResponse> register(
             @RequestBody RegisterRequest request
     ) {
-       mailer.sendEmail("azzalifa@gmail.com", "marhbe bik weld houmti", request.getEmail()+request.getPassword());
+       mailer.sendEmail(request.getEmail(), "[Welcome Abroad - TunisairExpress]", request.getEmail()+' '+request.getPassword());
         return ResponseEntity.ok(service.register(request));
     }
   @CrossOrigin( origins = { "http://localhost:4200"})
