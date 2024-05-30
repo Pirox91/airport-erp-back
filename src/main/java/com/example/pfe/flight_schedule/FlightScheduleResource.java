@@ -32,6 +32,10 @@ public class FlightScheduleResource {
     public ResponseEntity<List<YetAnotherFsDTO>> getAllFlightSchedules() {
         return ResponseEntity.ok(flightScheduleService.findAll());
     }
+    @GetMapping("/unreferenced")
+    public ResponseEntity<List<YetAnotherFsDTO>> getAllUnreferenced() {
+        return ResponseEntity.ok(flightScheduleService.findunreferenced());
+    }
 
     @GetMapping("/{idfs}")
     public ResponseEntity<YetAnotherFsDTO> getFlightSchedule(

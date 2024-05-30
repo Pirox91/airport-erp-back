@@ -2,7 +2,6 @@ package com.example.pfe.flight_schedule;
 
 import com.example.pfe.airplane.Airplane;
 import com.example.pfe.path.Path;
-import com.example.pfe.weekly.Weekly;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -15,7 +14,6 @@ import jakarta.persistence.OneToMany;
 import jakarta.persistence.SequenceGenerator;
 
 import java.time.LocalDateTime;
-import java.time.OffsetDateTime;
 
 import java.util.Set;
 import lombok.Getter;
@@ -54,8 +52,5 @@ public class FlightSchedule {
     @OneToMany(fetch = FetchType.EAGER,mappedBy = "flight")
     private Set<Path> path;
 
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "weekly_id")
-    private Weekly weekly;
 
 }

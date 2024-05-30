@@ -41,8 +41,8 @@ public class YetAnotherFsDTO {
             YetAnotherSerieDTO yetAnotherSerieDTO= new YetAnotherSerieDTO();
 
             yetAnotherSerieDTO.setDurration(path.getSerie().getDurration());
-            yetAnotherSerieDTO.setDestination(new AirportDTO(path.getSerie().getDestination().getIdarpt(),path.getSerie().getDestination().getName()));
-            yetAnotherSerieDTO.setDeparture(new AirportDTO(path.getSerie().getDeparture().getIdarpt(),path.getSerie().getDeparture().getName()));
+            yetAnotherSerieDTO.setDestination(new AirportDTO(path.getSerie().getDestination().getIdarpt(),path.getSerie().getDestination().getName(),path.getSerie().getDestination().getCountry(),path.getSerie().getDestination().getCity()));
+            yetAnotherSerieDTO.setDeparture(new AirportDTO(path.getSerie().getDeparture().getIdarpt(),path.getSerie().getDeparture().getName(),path.getSerie().getDeparture().getCountry(),path.getSerie().getDeparture().getCity()));
     
             YetAnotherPathDTO dto = new YetAnotherPathDTO(
                     path.getId(),path.getDeparture(),

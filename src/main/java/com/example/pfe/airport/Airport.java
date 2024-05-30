@@ -28,8 +28,9 @@ public class Airport {
             generator = "primary_sequence"
     )
     private Integer idarpt;
-
     @Column(nullable = false)
     private String name;
+    private String country;
+    private String city;
 
 }

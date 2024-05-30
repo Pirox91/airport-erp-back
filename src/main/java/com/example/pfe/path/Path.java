@@ -2,20 +2,14 @@ package com.example.pfe.path;
 
 import com.example.pfe.flight_schedule.FlightSchedule;
 import com.example.pfe.serie.Serie;
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.FetchType;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.SequenceGenerator;
+import jakarta.persistence.*;
 
 import java.sql.Time;
 import java.time.LocalDateTime;
 import lombok.Getter;
 import lombok.Setter;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 
 @Entity
@@ -48,7 +42,10 @@ public class Path {
     private FlightSchedule flight;
 
     @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "serie_id", nullable = false)
+    @JoinColumn(name = "serie_id", nullable = true)
     private Serie serie;
+    public void nullifyforeign(){
+        this.serie=null;
 
+    }
 }

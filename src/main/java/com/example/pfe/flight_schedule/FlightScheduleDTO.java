@@ -11,19 +11,9 @@ import lombok.Setter;
 @Getter
 @Setter
 public class FlightScheduleDTO {
-
     private Integer idfs;
-
-
     private LocalDateTime arrival;
-
-
     private LocalDateTime departure;
-
-
     private Integer airplane;
     private Boolean delay;
-
-    private Integer weekly;
-
 }

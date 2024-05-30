@@ -19,5 +19,7 @@ public class AirportDTO {
     @NotNull
     @Size(max = 255)
     private String name;
+    private String country;
+    private String city;
 
 }

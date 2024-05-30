@@ -15,7 +15,6 @@ import jakarta.persistence.OneToMany;
 import jakarta.persistence.SequenceGenerator;
 
 import java.sql.Time;
-import java.time.LocalTime;
 import java.util.Set;
 import lombok.Getter;
 import lombok.Setter;
@@ -24,6 +23,7 @@ import lombok.Setter;
 @Entity
 @Getter
 @Setter
+
 public class Serie {
 
     @Id
