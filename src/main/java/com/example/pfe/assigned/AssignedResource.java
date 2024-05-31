@@ -1,6 +1,6 @@
 package com.example.pfe.assigned;
 
-import com.example.pfe.controllers.notification.NotificationService;
+import com.example.pfe.config.MyWebSocketHandler;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import jakarta.validation.Valid;
 
@@ -24,10 +24,10 @@ import org.springframework.web.bind.annotation.RestController;
 public class AssignedResource {
 
     private final AssignedService assignedService;
-    private NotificationService notificationService;
-
-    public AssignedResource(final AssignedService assignedService) {
+    private final MyWebSocketHandler webSocketHandler;
+    public AssignedResource(final AssignedService assignedService,MyWebSocketHandler webSocketHandler) {
         this.assignedService = assignedService;
+        this.webSocketHandler = webSocketHandler;
     }
 
     @GetMapping
@@ -37,6 +37,7 @@ public class AssignedResource {
 
     @GetMapping("/{id}")
     public ResponseEntity<YetAnotherAssignedDTO> getAssigned(@PathVariable(name = "id") final Integer id) {
+
         return ResponseEntity.ok(assignedService.get(id));
     }
     @GetMapping("fs/{idfs}")
@@ -59,15 +60,17 @@ public class AssignedResource {
     public ResponseEntity<Integer> createAssigned(
             @RequestBody @Valid final AssignedDTO assignedDTO) {
         final Integer createdId = assignedService.create(assignedDTO);
-        notificationService.sendNotification(assignedDTO);
+        webSocketHandler.sendMessageToAll("updatedAssignedID"+createdId.toString());
+
         return new ResponseEntity<>(createdId, HttpStatus.CREATED);
     }
 
     @PutMapping("/{id}")
     public ResponseEntity<Integer> updateAssigned(@PathVariable(name = "id") final Integer id,
             @RequestBody @Valid final AssignedDTO assignedDTO) {
+        webSocketHandler.sendMessageToAll("updatedAssignedID"+id.toString());
+
         assignedService.update(id, assignedDTO);
-        notificationService.sendNotification(assignedDTO);
 
         return ResponseEntity.ok(id);
     }
@@ -75,6 +78,8 @@ public class AssignedResource {
     @DeleteMapping("/{id}")
     @ApiResponse(responseCode = "204")
     public ResponseEntity<Void> deleteAssigned(@PathVariable(name = "id") final Integer id) {
+        webSocketHandler.sendMessageToAll("deleteddAssignedID"+id.toString());
+
         assignedService.delete(id);
         return ResponseEntity.noContent().build();
     }

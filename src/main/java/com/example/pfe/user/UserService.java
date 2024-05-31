@@ -4,6 +4,8 @@ import com.example.pfe.assigned.Assigned;
 import com.example.pfe.assigned.AssignedRepository;
 import com.example.pfe.request.Request;
 import com.example.pfe.request.RequestRepository;
+import com.example.pfe.token.Token;
+import com.example.pfe.token.TokenRepository;
 import com.example.pfe.util.NotFoundException;
 import com.example.pfe.util.ReferencedWarning;
 import jakarta.transaction.Transactional;
@@ -19,13 +21,15 @@ public class UserService {
     private final UserRepository userRepository;
     private final RequestRepository requestRepository;
     private final AssignedRepository assignedRepository;
-
+    private final TokenRepository tokenRepository;
     public UserService(final UserRepository userRepository,
                        final RequestRepository requestRepository,
-                       final AssignedRepository assignedRepository) {
+                       final AssignedRepository assignedRepository,
+                       final TokenRepository tokenRepository) {
         this.userRepository = userRepository;
         this.requestRepository = requestRepository;
         this.assignedRepository = assignedRepository;
+        this.tokenRepository=tokenRepository;
     }
 
     public List<UserDTO> findAll() {
@@ -63,7 +67,8 @@ public class UserService {
         final User user = userRepository.findById(id)
                 .orElseThrow(NotFoundException::new);
         // remove many-to-many relations at owning side
-
+        List <Token> t=tokenRepository.findByUser(user);
+        tokenRepository.deleteAll(t);
         userRepository.delete(user);
     }
 

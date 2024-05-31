@@ -1,16 +1,12 @@
 package com.example.pfe.auth;
 
+import com.example.pfe.assigned.AssignedDTO;
 import com.example.pfe.email.EmailService;
-import com.example.pfe.user.UserRepository;
-import jakarta.annotation.security.PermitAll;
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.web.bind.annotation.*;
 
-import java.io.IOException;
 @RestController
 @RequestMapping("/api/auth")
 @RequiredArgsConstructor
@@ -18,7 +14,7 @@ import java.io.IOException;
 public class AuthenticationController {
     private final AuthenticationService service;
     private final EmailService mailer;
-   @PostMapping("/register")
+    @PostMapping("/register")
     public ResponseEntity<AuthenticationResponse> register(
             @RequestBody RegisterRequest request
     ) {

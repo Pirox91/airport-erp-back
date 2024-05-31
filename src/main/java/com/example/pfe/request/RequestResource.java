@@ -1,5 +1,6 @@
 package com.example.pfe.request;
 
+import com.example.pfe.config.MyWebSocketHandler;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import jakarta.validation.Valid;
 import java.util.List;
@@ -21,9 +22,12 @@ import org.springframework.web.bind.annotation.RestController;
 public class RequestResource {
 
     private final RequestService requestService;
+    private final MyWebSocketHandler webSocketHandler;
 
-    public RequestResource(final RequestService requestService) {
+    public RequestResource(final RequestService requestService,MyWebSocketHandler webSocketHandler) {
         this.requestService = requestService;
+        this.webSocketHandler = webSocketHandler;
+
     }
 
     @GetMapping
@@ -42,6 +46,8 @@ public class RequestResource {
     public ResponseEntity<Integer> createRequest(@RequestBody @Valid final RequestDTO requestDTO) {
         requestDTO.setViewed(false);
         final Integer createdId = requestService.create(requestDTO);
+        webSocketHandler.sendMessageToAll("createdRequestID"+createdId.toString());
+
         return new ResponseEntity<>(createdId, HttpStatus.CREATED);
     }
 

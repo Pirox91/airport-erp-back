@@ -28,3 +28,11 @@ error:
       5xx: ERROR
 springdoc:
   pathsToMatch: /api/**
+logging:
+  level:
+    org:
+      springframework:
+        web:
+          socket: DEBUG
+        messaging: DEBUG
+
