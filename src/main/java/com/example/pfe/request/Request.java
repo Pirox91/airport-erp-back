@@ -1,5 +1,6 @@
 package com.example.pfe.request;
 
+import com.example.pfe.assigned.Assigned;
 import com.example.pfe.user.User;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -47,5 +48,8 @@ public class Request {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
     private User user;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "assigned_id")
+    private Assigned assigned;
 
 }

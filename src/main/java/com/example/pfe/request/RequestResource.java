@@ -46,7 +46,7 @@ public class RequestResource {
     public ResponseEntity<Integer> createRequest(@RequestBody @Valid final RequestDTO requestDTO) {
         requestDTO.setViewed(false);
         final Integer createdId = requestService.create(requestDTO);
-        webSocketHandler.sendMessageToAll("createdRequestID"+createdId.toString());
+        webSocketHandler.sendMessageToAll("createdRequestID "+createdId.toString());
 
         return new ResponseEntity<>(createdId, HttpStatus.CREATED);
     }
@@ -54,11 +54,14 @@ public class RequestResource {
     @PutMapping("/{id}")
     public ResponseEntity<Integer> updateRequest(@PathVariable(name = "id") final Integer id,
             @RequestBody @Valid final RequestDTO requestDTO) {
+        webSocketHandler.sendMessageToAll("updatedRequestID "+id.toString());
+
         requestService.update(id, requestDTO);
         return ResponseEntity.ok(id);
     }
     @PutMapping("view/{id}")
     public ResponseEntity<Integer> updateRequestView(@PathVariable(name = "id") final Integer id) {
+
         requestService.updateViewed(id);
         return ResponseEntity.ok(id);
     }
@@ -66,6 +69,7 @@ public class RequestResource {
     @DeleteMapping("/{id}")
     @ApiResponse(responseCode = "204")
     public ResponseEntity<Void> deleteRequest(@PathVariable(name = "id") final Integer id) {
+
         requestService.delete(id);
         return ResponseEntity.noContent().build();
     }

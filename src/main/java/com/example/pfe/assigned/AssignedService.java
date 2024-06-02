@@ -1,15 +1,14 @@
 package com.example.pfe.assigned;
 
+import com.example.pfe.config.MyWebSocketHandler;
 import com.example.pfe.flight_schedule.*;
 import com.example.pfe.user.User;
 import com.example.pfe.user.UserRepository;
 import com.example.pfe.util.NotFoundException;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 
-import jakarta.validation.constraints.Null;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import java.util.stream.Collectors;
@@ -21,12 +20,16 @@ public class AssignedService {
     private final AssignedRepository assignedRepository;
     private final FlightScheduleRepository flightScheduleRepository;
     private final UserRepository userRepository;
+    private final MyWebSocketHandler webSocketHandler;
+
     public AssignedService(final AssignedRepository assignedRepository,
             final FlightScheduleRepository flightScheduleRepository,
-            final UserRepository userRepository) {
+            final UserRepository userRepository,MyWebSocketHandler webSocketHandler) {
         this.assignedRepository = assignedRepository;
         this.flightScheduleRepository = flightScheduleRepository;
         this.userRepository = userRepository;
+        this.webSocketHandler = webSocketHandler;
+
     }
 
     public List<YetAnotherAssignedDTO> findAll() {
@@ -71,6 +74,9 @@ public class AssignedService {
     }
 
     public void delete(final Integer id) {
+      Assigned assigned= assignedRepository.findById(id).orElseThrow();
+        webSocketHandler.sendMessageToAll("deletedAssignedForFLight "+assigned.getFlight().getIdfs().toString());
+
         assignedRepository.deleteById(id);
     }
 

@@ -32,6 +32,7 @@ public class AssignedResource {
 
     @GetMapping
     public ResponseEntity<List<YetAnotherAssignedDTO>> getAllAssigneds() {
+
         return ResponseEntity.ok(assignedService.findAll());
     }
 
@@ -60,7 +61,7 @@ public class AssignedResource {
     public ResponseEntity<Integer> createAssigned(
             @RequestBody @Valid final AssignedDTO assignedDTO) {
         final Integer createdId = assignedService.create(assignedDTO);
-        webSocketHandler.sendMessageToAll("updatedAssignedID"+createdId.toString());
+        webSocketHandler.sendMessageToAll("updatedAssignedID "+createdId.toString());
 
         return new ResponseEntity<>(createdId, HttpStatus.CREATED);
     }
@@ -68,7 +69,7 @@ public class AssignedResource {
     @PutMapping("/{id}")
     public ResponseEntity<Integer> updateAssigned(@PathVariable(name = "id") final Integer id,
             @RequestBody @Valid final AssignedDTO assignedDTO) {
-        webSocketHandler.sendMessageToAll("updatedAssignedID"+id.toString());
+        webSocketHandler.sendMessageToAll("updatedAssignedID "+id.toString());
 
         assignedService.update(id, assignedDTO);
 
@@ -78,7 +79,7 @@ public class AssignedResource {
     @DeleteMapping("/{id}")
     @ApiResponse(responseCode = "204")
     public ResponseEntity<Void> deleteAssigned(@PathVariable(name = "id") final Integer id) {
-        webSocketHandler.sendMessageToAll("deleteddAssignedID"+id.toString());
+        webSocketHandler.sendMessageToAll("deleteddAssignedID "+id.toString());
 
         assignedService.delete(id);
         return ResponseEntity.noContent().build();

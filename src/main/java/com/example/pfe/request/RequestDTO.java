@@ -25,5 +25,6 @@ public class RequestDTO {
     private String title;
 
     private Integer user;
+    private Integer assigned;
 
 }

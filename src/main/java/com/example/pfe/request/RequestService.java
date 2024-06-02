@@ -1,5 +1,6 @@
 package com.example.pfe.request;
 
+import com.example.pfe.config.MyWebSocketHandler;
 import com.example.pfe.user.User;
 import com.example.pfe.user.UserRepository;
 import com.example.pfe.util.NotFoundException;
@@ -13,11 +14,15 @@ public class RequestService {
 
     private final RequestRepository requestRepository;
     private final UserRepository userRepository;
+    private final MyWebSocketHandler webSocketHandler;
+
 
     public RequestService(final RequestRepository requestRepository,
-            final UserRepository userRepository) {
+            final UserRepository userRepository,MyWebSocketHandler webSocketHandler) {
         this.requestRepository = requestRepository;
         this.userRepository = userRepository;
+        this.webSocketHandler = webSocketHandler;
+
     }
 
     public List<RequestDTO> findAll() {
@@ -36,6 +41,7 @@ public class RequestService {
     public Integer create(final RequestDTO requestDTO) {
         final Request request = new Request();
         mapToEntity(requestDTO, request);
+        request.setViewed(false);
         return requestRepository.save(request).getId();
     }
 
@@ -57,11 +63,15 @@ public class RequestService {
 
 
     public void delete(final Integer id) {
+        Request request=requestRepository.findById(id).orElseThrow();
+        webSocketHandler.sendMessageToAll("createdRequestID "+request.getUser().getId().toString());
+
         requestRepository.deleteById(id);
     }
 
     private RequestDTO mapToDTO(final Request request, final RequestDTO requestDTO) {
         requestDTO.setId(request.getId());
+        requestDTO.setAssigned(request.getAssigned().getId());
         requestDTO.setViewed(request.getViewed());
         requestDTO.setState(request.getState());
         requestDTO.setBody(request.getBody());
@@ -72,12 +82,14 @@ public class RequestService {
 
     private Request mapToEntity(final RequestDTO requestDTO, final Request request) {
         request.setState(requestDTO.getState());
+
         request.setViewed(requestDTO.getViewed());
         request.setBody(requestDTO.getBody());
         request.setTitle(requestDTO.getTitle());
         final User user = requestDTO.getUser() == null ? null : userRepository.findById(requestDTO.getUser())
                 .orElseThrow(() -> new NotFoundException("user not found"));
         request.setUser(user);
+        request.setAssigned(request.getAssigned());
         return request;
     }
 
