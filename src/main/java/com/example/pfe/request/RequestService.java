@@ -1,5 +1,7 @@
 package com.example.pfe.request;
 
+import com.example.pfe.assigned.Assigned;
+import com.example.pfe.assigned.AssignedRepository;
 import com.example.pfe.config.MyWebSocketHandler;
 import com.example.pfe.user.User;
 import com.example.pfe.user.UserRepository;
@@ -15,14 +17,15 @@ public class RequestService {
     private final RequestRepository requestRepository;
     private final UserRepository userRepository;
     private final MyWebSocketHandler webSocketHandler;
+    private final AssignedRepository assignedRepository;
 
 
     public RequestService(final RequestRepository requestRepository,
-            final UserRepository userRepository,MyWebSocketHandler webSocketHandler) {
+                          final UserRepository userRepository, MyWebSocketHandler webSocketHandler, AssignedRepository assignedRepository) {
         this.requestRepository = requestRepository;
         this.userRepository = userRepository;
         this.webSocketHandler = webSocketHandler;
-
+        this.assignedRepository = assignedRepository;
     }
 
     public List<RequestDTO> findAll() {
@@ -42,6 +45,7 @@ public class RequestService {
         final Request request = new Request();
         mapToEntity(requestDTO, request);
         request.setViewed(false);
+        System.out.println(request.getAssigned());
         return requestRepository.save(request).getId();
     }
 
@@ -89,7 +93,10 @@ public class RequestService {
         final User user = requestDTO.getUser() == null ? null : userRepository.findById(requestDTO.getUser())
                 .orElseThrow(() -> new NotFoundException("user not found"));
         request.setUser(user);
-        request.setAssigned(request.getAssigned());
+        request.setTitle(requestDTO.getTitle());
+        final Assigned assigned = requestDTO.getUser() == null ? null : assignedRepository.findById(requestDTO.getAssigned())
+                .orElseThrow(() -> new NotFoundException("assigned not found"));
+        request.setAssigned(assigned);
         return request;
     }
 
