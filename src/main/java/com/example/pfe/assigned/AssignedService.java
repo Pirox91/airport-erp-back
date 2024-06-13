@@ -116,23 +116,7 @@ public class AssignedService {
     public boolean flightExists(final Integer idfs) {
         return assignedRepository.existsByFlightIdfs(idfs);
     }
-    public YetAnotherAssignedDTO convertToyetAnotherAssignedDTO(Assigned assigned) {
-        UserDTO pilotDTO = new UserDTO(assigned.getPilot().getId(),assigned.getPilot().getName(), assigned.getPilot().getSurname(), "pilot");
-        UserDTO coPilotDTO = new UserDTO(assigned.getCopilot().getId(),assigned.getCopilot().getName(), assigned.getCopilot().getSurname(), "copilot");
-        UserDTO pncDTO = new UserDTO(assigned.getPnc().getId(),assigned.getPnc().getName(), assigned.getPnc().getSurname(), "pnc");
-        UserDTO pnc2DTO = new UserDTO(assigned.getPnc2().getId(),assigned.getPnc2().getName(), assigned.getPnc2().getSurname(), "pnc");
-        UserDTO pnc3DTO = new UserDTO(assigned.getPnc3().getId(),assigned.getPnc3().getName(), assigned.getPnc3().getSurname(), "pnc");
 
-        YetAnotherAssignedDTO assignedDTO = new YetAnotherAssignedDTO();
-        assignedDTO.setPilot(pilotDTO);
-        assignedDTO.setCoPilot(coPilotDTO);
-        assignedDTO.setPnc(pncDTO);
-        assignedDTO.setPnc(pncDTO);
-        assignedDTO.setPnc2(pnc2DTO);
-        assignedDTO.setPnc3(pnc3DTO);
-
-        return assignedDTO;
-    }
     public List<YetAnotherAssignedDTO> getAssignmentsByUser(Long userId) {
         List<Assigned> assignments = assignedRepository.findByUserId(userId);
         return assignments.stream()

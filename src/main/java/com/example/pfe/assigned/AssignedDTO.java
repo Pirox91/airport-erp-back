@@ -10,7 +10,6 @@ public class AssignedDTO {
 
     private Integer id;
 
-    @AssignedFlightUnique
     private Integer flight;
 
     private Integer pilot;

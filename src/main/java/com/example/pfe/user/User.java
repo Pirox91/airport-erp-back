@@ -55,7 +55,8 @@ public class User implements UserDetails {
 
     @Column
     private String password;
-    private LocalDateTime birthday;
+    @Column
+    private Integer passport;
 
     @Column(nullable = false)
     private String name;

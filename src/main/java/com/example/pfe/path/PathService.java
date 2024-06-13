@@ -52,6 +52,7 @@ public class PathService {
     }
 
     public void delete(final Integer id) {
+
         pathRepository.deleteById(id);
     }
 

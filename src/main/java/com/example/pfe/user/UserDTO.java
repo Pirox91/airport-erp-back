@@ -29,7 +29,7 @@ public class  UserDTO {
     @NotNull
     @Size(max = 255)
     private String surname;
-    private LocalDateTime birthday;
+    private Integer passport;
 
     private Role role;
     private Type type;

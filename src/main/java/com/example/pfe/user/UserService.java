@@ -82,14 +82,14 @@ public class UserService {
         userDTO.setSurname(user.getSurname());
         userDTO.setRole(user.getRole());
         userDTO.setType(user.getType());
-        userDTO.setBirthday(user.getBirthday());
+        userDTO.setPassport(user.getPassport());
 
         return userDTO;
     }
 
     private User mapToEntity(final UserDTO userDTO, final User user) {
         user.setAvailable(userDTO.getAvailable());
-        user.setBirthday(userDTO.getBirthday());
+        user.setPassport(userDTO.getPassport());
         user.setValiditelicense(userDTO.getValiditelicense());
         user.setEmail(userDTO.getEmail());
         user.setName(userDTO.getName());
